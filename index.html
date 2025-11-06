@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculadora IPv4 REDES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="container">
+    <header>
+      <h1>🖥Calculadora IPv4 - REDES</h1>
+    </header>
+
+    <section class="input-section">
+      <p class="lead">IP: </p>
+      <input type="text" id="ip" placeholder="XXX.XXX.XXX.XXX" />
+      <p class="lead">Máscara: </p>
+      <input type="text" id="mask" placeholder="XXX.XXX.XXX.XXX  o  /XX" />
+      <button id="calcBtn">Calcular</button>
+    </section>
+
+    <section id="results">
+      <h2>Resultados</h2>
+      <div class="grid">
+        <div class="card"><strong>IP ingresada</strong><p id="res-ip">xxx.xxx.xxx.xxx</p></div>
+        <div class="card"><strong>Máscara</strong><p id="res-mask">xxx.xxx.xxx.xxx (/xx)</p></div>
+        <div class="card"><strong>Dirección de red</strong><p id="res-network">xxx.xxx.xxx.xxx</p></div>
+        <div class="card"><strong>Broadcast</strong><p id="res-broadcast">xxx.xxx.xxx.xxx</p></div>
+        <div class="card"><strong>Hosts útiles</strong><p id="res-hosts">xxx</p></div>
+        <div class="card"><strong>Rango de hosts</strong><p id="res-range">xxx.xxx.xxx.xxx — xxx.xxx.xxx.xxx</p></div>
+        <div class="card side"><strong>Clase</strong><p id="res-class">Clase ?</p></div>
+        <div class="card side"><strong>Público / Privado</strong><p id="res-private">?</p></div>
+      </div>
+
+      <div class="binarios">
+        <h3>BINARIO</h3>
+        <div class="bin-row"><span class="label">IP en binario</span><div id="bin-ip" class="bin-box">00000000.00000000.00000000.00000000</div></div>
+        <div class="bin-row"><span class="label">Máscara en binario</span><div id="bin-mask" class="bin-box">00000000.00000000.00000000.00000000</div></div>
+        <div class="bin-row"><span class="label">Red en binario</span><div id="bin-network" class="bin-box">00000000.00000000.00000000.00000000</div></div>
+        <div class="bin-row"><span class="label">Broadcast en binario</span><div id="bin-broadcast" class="bin-box">00000000.00000000.00000000.00000000</div></div>
+
+        <div class="legend">
+          <span class="legend-item"><span class="chip net"></span> Red (bits de red)</span>
+          <span class="legend-item"><span class="chip host"></span> Host (bits restantes)</span>
+        </div>
+      </div>
+      <footer>
+        David Santiago García Preciado - Redes 1 Grupo 1
+      </footer>
+    </section>
+  </div>
+  <script src="script.js?v=2"></script>
+</body>
+</html>
