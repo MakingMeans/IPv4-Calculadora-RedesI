@@ -33,11 +33,16 @@ IP ingresada: 192.168.0.15
 Máscara: 255.255.255.0
 
 IP de Red: 192.168.0.0
+
 IP de Broadcast: 192.168.0.255
+
 Rango de IPs útiles: 192.168.0.1 - 192.168.0.254
+
 Cantidad de hosts útiles: 254
 Clase: C
 Tipo: Privada
+
 Porción de red: 11000000.10101000.00000000
+
 Porción de host: 00001111
 
