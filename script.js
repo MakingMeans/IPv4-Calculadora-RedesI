@@ -54,9 +54,16 @@ function prefixLengthFromMask(maskInt){
 function computeAll(ipStr, maskStr){
   const ip = ipToInt(ipStr);
   const maskInt = maskFromInput(maskStr);
-  if(ip === null || maskInt === null) {
-    return null;
+  if(ip === null && maskInt === null) {
+    return "invalidBoth";
   }
+  if(ip === null) {
+    return "invalidIp";
+  }
+  if(maskInt === null) {
+    return "invalidMask";
+  }
+
   const net = (ip & maskInt) >>> 0;
   const bc  = (net | (~maskInt >>> 0)) >>> 0;
   const hosts = Math.max(0, (bc - net - 1));
@@ -108,15 +115,65 @@ function classifyIp(ipStr){
   return { clase, tipo };
 }
 
+// HOSTS ÚTILES SEGÚN TUS REGLAS ESPECIALES
+function computeUsableHosts(prefix) {
+    if (prefix === 31) return 2;  // Obligatorio
+    if (prefix === 32) return 1;  // Obligatorio
+
+    return Math.pow(2, 32 - prefix) - 2;
+}
+
+// RANGO ÚTIL CON TUS REGLAS
+function computeUsableRange(network, broadcast, prefix) {
+
+    // /32 → rango = IP-IP
+    if (prefix === 32) {
+        return intToIp(network) + " - " + intToIp(network);
+    }
+
+    // /31 → rango = network-broadcast
+    if (prefix === 31) {
+        return intToIp(network) + " - " + intToIp(broadcast);
+    }
+
+    // Rangos normales
+    let first = network + 1;
+    let last = broadcast - 1;
+
+    return intToIp(first) + " - " + intToIp(last);
+}
+
+
 // Ejecución de cuando se le da al boton de calcular
 document.getElementById('calcBtn').addEventListener('click', ()=>{
   const ipStr = document.getElementById('ip').value.trim();
   const maskStr = document.getElementById('mask').value.trim();
-  if(!ipStr || !maskStr){
-    alert('Ingresa IP y máscara (ej: 192.168.1.1 y 255.255.255.0 o /24)');
+  if(!ipStr && !maskStr){
+    alert('Ingresa una IP y máscara (ej: 192.168.1.1 y 255.255.255.0 o /24)');
     return;
   }
+  if(!ipStr){
+    alert('Ingresa una IP (ej: 192.168.1.1)');
+    return;
+  }
+  if(!maskStr){
+    alert('Ingresa una máscara (ej: 255.255.255.0 o /24)');
+    return;
+  }
+
   const all = computeAll(ipStr, maskStr);
+  if(all=="invalidBoth"){
+    alert('La IP y la máscara son inválidas (los rangos son 0-255 para cada octeto y /0-32 para CIDR)');
+    return;
+  }
+  if(all=="invalidIp"){
+    alert('La IP es inválida (los rangos son 0-255 para cada octeto)');
+    return;
+  }
+  if(all=="invalidMask"){
+    alert('La máscara es inválida (los rangos son 0-255 para cada octeto o /0-32 para CIDR )');
+    return;
+  }
   if(!all){
     alert('IP o máscara inválida');
     return;
@@ -128,8 +185,9 @@ document.getElementById('calcBtn').addEventListener('click', ()=>{
   document.getElementById('res-mask').innerText = mparts.join('.') + ' (/' + all.prefix + ')';
   document.getElementById('res-network').innerText = intToIp(all.network);
   document.getElementById('res-broadcast').innerText = intToIp(all.broadcast);
-  document.getElementById('res-hosts').innerText = String(all.hosts);
-  document.getElementById('res-range').innerText = (all.hosts > 0) ? (intToIp(all.network + 1) + ' — ' + intToIp(all.broadcast - 1)) : 'No hosts';
+  document.getElementById("res-hosts").innerText = computeUsableHosts(all.prefix);
+  document.getElementById("res-range").innerText = computeUsableRange(all.network, all.broadcast, all.prefix);
+
   const cls = classifyIp(ipStr);
   document.getElementById('res-class').innerText = cls.clase;
   document.getElementById('res-private').innerText = cls.tipo;
