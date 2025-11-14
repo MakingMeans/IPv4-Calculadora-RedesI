@@ -2,11 +2,11 @@
 
 Este proyecto consiste en el desarrollo de una **página web** que calcule información relacionada con una dirección **IP versión 4 (IPv4)**.  
 
-La aplicación debe recibir una dirección IP en formato decimal (`X.X.X.X`) y su **máscara de red** (también en formato decimal, y puede recibir CIDR como adicional), y generar los siguientes resultados:
+La aplicación debe recibir una dirección IP en formato decimal (`X.X.X.X`) y su **máscara de red** (en formato decimal o en CIDR), y generar los siguientes resultados:
 
 ---
 
-## 🔢 **Requerimientos funcionales**
+## **Requerimientos funcionales**
 
 La aplicación debe mostrar:
 
@@ -20,15 +20,7 @@ La aplicación debe mostrar:
 
 ---
 
-## ⚙️ **Requerimientos técnicos**
-
-- Debe ejecutarse en el **puerto 80**
-- El archivo principal debe llamarse: `index.XXX`
-- El sistema debe ser implementado en un **servidor Linux Rocky 9**, dentro de una **máquina virtual en VirtualBox**
-
----
-
-## 🧑‍💻 **Ejemplo de salida esperada**
+## **Salida esperada**
 IP ingresada: 192.168.0.15
 Máscara: 255.255.255.0
 
@@ -39,7 +31,9 @@ IP de Broadcast: 192.168.0.255
 Rango de IPs útiles: 192.168.0.1 - 192.168.0.254
 
 Cantidad de hosts útiles: 254
+
 Clase: C
+
 Tipo: Privada
 
 Porción de red: 11000000.10101000.00000000
